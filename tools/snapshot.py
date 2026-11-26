@@ -14,16 +14,22 @@ Mostra TUDO que o bot vê e pensa:
 Salva tudo como imagens + print detalhado no terminal.
 
 Uso:
-  python snapshot.py
-  python snapshot.py --balls 5
-  python snapshot.py --save    (salva PNGs em vez de mostrar janelas)
+  python tools/snapshot.py
+  python tools/snapshot.py --balls 5
+  python tools/snapshot.py --save    (salva PNGs em vez de mostrar janelas)
 """
 
 import argparse
+import sys
 import time
+from pathlib import Path
+from typing import List
+
 import cv2
 import numpy as np
-from typing import List
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import config as cfg
 from vision import (

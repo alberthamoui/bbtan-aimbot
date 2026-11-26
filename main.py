@@ -11,7 +11,7 @@ Pipeline por turno:
 Uso:
   python main.py              -> Roda o bot
   python main.py --debug      -> Mostra visualização a cada turno
-  python main.py --dry-run    -> Simula sem executar ações no mouse
+  python main.py --dry-run    -> Só executa a visão, sem simular nem clicar
   python main.py --referencia -> Joga e salva capturas limpas do jogo real
                                  (referência pra versão local do jogo)
   python main.py --local      -> Joga a versão LOCAL do jogo (jogo_local/),
@@ -55,7 +55,7 @@ def parse_args():
         "--debug", action="store_true", help="Mostra visualização de debug a cada turno"
     )
     parser.add_argument(
-        "--dry-run", action="store_true", help="Simula sem mover o mouse"
+        "--dry-run", action="store_true", help="Só executa a visão, sem simular nem clicar"
     )
     parser.add_argument(
         "--smart-wait",
@@ -440,8 +440,11 @@ def main():
             print("\nParado pelo usuario.")
         finally:
             masks_stop.set()
-            masks_thread.join(timeout=2)
-            cv2.destroyAllWindows()
+            if masks_thread.ident is not None:
+                masks_thread.join(timeout=2)
+                cv2.destroyAllWindows()
+            if motor_local is not None:
+                motor_local.parar()
         return
 
     if args.delay > 0 and motor_local is None:

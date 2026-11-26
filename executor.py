@@ -11,14 +11,9 @@ polling de vision.detect_round_end().
 
 import math
 import time
-import pyautogui
 
 import config as cfg
 import tela
-
-# Segurança do PyAutoGUI
-pyautogui.FAILSAFE = True  # mova o mouse pro canto superior esquerdo pra abortar
-pyautogui.PAUSE = 0.05  # pausa mínima entre ações
 
 
 def angle_to_screen_coords(

@@ -5,9 +5,15 @@ debug_view.py — Visualização da trajetória simulada sobre o frame do jogo.
 Roda em modo standalone: captura, simula, desenha e mostra.
 """
 
+import sys
+from pathlib import Path
+from typing import List, Tuple
+
 import cv2
 import numpy as np
-from typing import List, Tuple
+
+if not __package__:
+    sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import config as cfg
 from vision import GameState, scan_game, BlockType

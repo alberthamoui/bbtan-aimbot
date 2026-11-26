@@ -12,9 +12,19 @@ etc.). capturar() devolve BGR uint8 (h, w, 3), como o OpenCV espera.
 """
 
 import threading
+from functools import lru_cache
 from typing import Optional
 
 import numpy as np
+
+
+@lru_cache(maxsize=1)
+def _mouse():
+    import pyautogui
+
+    pyautogui.FAILSAFE = True  # mova o mouse pro canto superior esquerdo pra abortar
+    pyautogui.PAUSE = 0.05
+    return pyautogui
 
 
 class BackendReal:
@@ -41,20 +51,14 @@ class BackendReal:
         return dict(self._sct().monitors[0])
 
     def mover(self, x: int, y: int, duracao: float = 0.0) -> None:
-        import pyautogui
-
-        pyautogui.moveTo(x, y, duration=duracao)
+        _mouse().moveTo(x, y, duration=duracao)
 
     def arrastar(self, dx: int, dy: int, duracao: float) -> None:
         """Arrasta a partir da posição atual do mouse (botão esquerdo)."""
-        import pyautogui
-
-        pyautogui.drag(dx, dy, duration=duracao, button="left")
+        _mouse().drag(dx, dy, duration=duracao, button="left")
 
     def clicar(self, x: int, y: int) -> None:
-        import pyautogui
-
-        pyautogui.click(x, y)
+        _mouse().click(x, y)
 
 
 _backend = BackendReal()
