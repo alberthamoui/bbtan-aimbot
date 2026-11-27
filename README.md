@@ -13,6 +13,10 @@ copia do jogo que roda na memoria, sem precisar baixar nada.
 pip install -r requirements.txt
 ```
 
+No Linux, a captura da tela real precisa de uma sessao X11 com `DISPLAY` configurado.
+Para controlar o mouse real, use um Python com Tkinter (no Python do Ubuntu/Debian,
+instale `python3-tk`). A ajuda e o jogo local sem janelas nao precisam de X11 nem Tkinter.
+
 ### 2. Jogar no jogo real
 
 Deixe o BBTAN aberto e visivel no Google Play Games, [calibre](#calibracao-jogo-real) a
@@ -34,6 +38,15 @@ python main.py --local-janela --seed 7                        # assistir: janela
 python main.py --local --sem-janelas --max-turns 10           # sem nenhuma janela, tempo real
 python main.py --rapido --sem-janelas --seed 7 --partidas 1   # uma partida inteira, rapido
 ```
+
+Para testar um turno local sem jogo instalado, tela ou mouse:
+
+```bash
+python -m unittest -v
+```
+
+O `--dry-run` usa a tela real por padrao. Para testar so a visao sem `DISPLAY`,
+use `python main.py --dry-run --local --sem-janelas` e pare com Ctrl+C.
 
 Para parar: Ctrl+C, ou mova o mouse para o canto superior esquerdo da tela.
 

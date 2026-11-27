@@ -10,7 +10,10 @@ Mostra 4 janelas:
 Controles: 'q' para sair | 'r' para forçar re-scan
 """
 
-from visualizar_masks import run_masks_window
+if __package__:
+    from .visualizar_masks import run_masks_window
+else:
+    from visualizar_masks import run_masks_window
 
 if __name__ == "__main__":
     print("=== VISUALIZADOR DE MASKS ===")
